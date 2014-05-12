@@ -46,14 +46,14 @@ public class GSB extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
-		// rÈcupÈration de l'EditTextLogin gr‚ce ‡ son ID
+		// r√©cup√©ration de l'EditTextLogin gr√¢ce √† son ID
 		loginText = (EditText) findViewById(R.id.EditTextLogin);
-		// rÈcupÈration de l'EditTextPassword gr‚ce ‡ son ID
+		// r√©cup√©ration de l'EditTextPassword gr√¢ce √† son ID
 		passwordText = (EditText) findViewById(R.id.EditTextPassword);
-		// rÈcupÈration du boutton gr‚ce ‡ son ID
+		// r√©cup√©ration du boutton gr√¢ce √† son ID
 		bouton = (Button) findViewById(R.id.BoutonEnvoyer);
 		
-		//on applique un Ècouteur d'Èvenement au clique bouton
+		//on applique un √©couteur d'√©venement au clique bouton
 		bouton.setOnClickListener(
 				new OnClickListener(){
 					@Override
@@ -63,27 +63,27 @@ public class GSB extends Activity {
 						
 						
 						try{
-							//CrÈation des paramÈtres ‡ envoyer au serveur web
+							//Cr√©ation des param√®tres √† envoyer au serveur web
 							ArrayList<NameValuePair> parametres = new ArrayList<NameValuePair>();
 							parametres.add(new BasicNameValuePair("login", loginText.getText().toString()));
 							parametres.add(new BasicNameValuePair("password", passwordText.getText().toString()));
 							
-							//Envoie des paramÈtres aux script PHP
+							//Envoi des param√®tres aux script PHP
 							HttpClient client = new DefaultHttpClient();
-							HttpPost post = new HttpPost("http://laurentlepee.com/bts/androidGSB/login_verify.php");
+							HttpPost post = new HttpPost("http://hiddenz.esy.es/gsb_android/login_verify.php");
 							
-							//Envoie des donnÈes
+							//Envoie des donn√©es
 							post.setEntity(new UrlEncodedFormEntity(parametres));
 							
-							//RÈponse du serveur web
+							//R√©ponse du serveur web
 							HttpResponse response = client.execute(post);
 							
-							//RÈcupÈration de la rÈponse en JSON
+							//R√©cup√©ration de la r√©ponse en JSON
 							String jsonResult = inputStreamToString(
 									response.getEntity().getContent()).toString();
 							JSONObject jsonobject = new JSONObject(jsonResult);
 							
-							//On parcour l'objet JSON pour avoir la valeur de "result"
+							//On parcourt l'objet JSON pour avoir la valeur de "result"
 							resultat = jsonobject.getString("result");
 						} catch(JSONException e){
 							Log.e("log_tag", "Erreur JSON " + e.toString());
@@ -106,26 +106,28 @@ public class GSB extends Activity {
 		setContentView(R.layout.activity_visiteur);
 		((TextView)findViewById(R.id.TextViewVisiteur)).setText("Bienvenue " + login);
 		try{
-			//CrÈation des paramÈtres ‡ envoyer au serveur web
+			//Cr√©ation des param√®tres √† envoyer au serveur web
 			ArrayList<NameValuePair> parametres = new ArrayList<NameValuePair>();
 			parametres.add(new BasicNameValuePair("login", login));
 			
-			//Envoie des paramÈtres aux script PHP
+			//Envoi des param√®tres aux script PHP
 			HttpClient client = new DefaultHttpClient();
-			HttpPost post = new HttpPost("http://laurentlepee.com/bts/androidGSB/visiteur.php");
+			HttpPost post = new HttpPost("http://hiddenz.esy.es/gsb_android/visiteur.php");
 			
-			//Envoie des donnÈes
+			//Envoi des donn√©es
 			post.setEntity(new UrlEncodedFormEntity(parametres));
 			
-			//RÈponse du serveur web
+			//R√©ponse du serveur web
 			HttpResponse response = client.execute(post);
 			
-			//RÈcupÈration de la rÈponse en JSON
+			//R√©cup√©ration de la r√©ponse en JSON
 			String jsonResult = inputStreamToString(
 					response.getEntity().getContent()).toString();
+			Log.d("log_tag",jsonResult );
+			System.out.print(jsonResult );
 			JSONObject jsonobject = new JSONObject(jsonResult);
 			
-			//On parcour l'objet JSON pour avoir la valeur de "result"
+			//On parcourt l'objet JSON pour avoir la valeur de "result"
 			id_visiteur = jsonobject.getString("id_vis");
 			nom_visiteur = jsonobject.getString("nom_vis");
 			prenom_visiteur = jsonobject.getString("prenom_vis");
@@ -135,10 +137,12 @@ public class GSB extends Activity {
 		} catch (Exception e){
 			Log.e("log_tag", "Erreur connexion http " + e.toString());
 		}
+		
+
 		if (nom_visiteur.contentEquals("null")) {
 			
 		} else {
-			((TextView)findViewById(R.id.TextViewVisiteur)).setText("Vous Ítes : " + nom_visiteur + " " + prenom_visiteur + " " + id_visiteur);
+			((TextView)findViewById(R.id.TextViewVisiteur)).setText("Vous √™tes : " + nom_visiteur + " " + prenom_visiteur + " " + id_visiteur);
 		}
 		
 	}

@@ -1,10 +1,10 @@
 <?php
 
 // Paramètres de connexion
-$server = "localhost";
-$bdd = "gsb";
-$user = "root";
-$pass = "d072812198788lv";
+$server = "mysql.hostinger.fr";
+$bdd = "u516518988_hdz";
+$user = "u516518988_hdz";
+$pass = "azerty";
 
 try
 {
